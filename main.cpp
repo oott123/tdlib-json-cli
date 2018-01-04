@@ -25,7 +25,6 @@ int main(int argc, char const *argv[])
 }
 
 void proc_thread_input() {
-    trigger_cli_event("input_thread_started");
     std::string input;
     while (std::cin) {
         getline(std::cin, input);
@@ -47,7 +46,6 @@ void proc_thread_input() {
 }
 
 void proc_thread_output() {
-    trigger_cli_event("output_thread_started");
     const char* output;
     while (should_stop == 0) {
         output = td_json_client_receive(client, 1);

@@ -56,4 +56,4 @@ install:
 script:
   - mkdir build
   - cd build
-  - cmake .. && make -j${JOBS} VERBOSE=1
+  - cmake -DCMAKE_BUILD_TYPE=Release .. && make -j${JOBS} VERBOSE=1
