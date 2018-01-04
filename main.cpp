@@ -2,6 +2,7 @@
 #include <string>
 #include <thread>
 #include "td/td/telegram/td_json_client.h"
+#include "td/td/telegram/td_log.h"
 
 void* client;
 int should_stop = 0;
@@ -32,6 +33,13 @@ void proc_thread_input() {
             break;
         }
         if (input.empty()) {
+            continue;
+        }
+        if (input.rfind("verbose ", 0) == 0) {
+            // verbose<space>
+            // 01234567
+            auto level = atoi(input.substr(7).c_str());
+            td_set_log_verbosity_level(level);
             continue;
         }
         td_json_client_send(client, input.c_str());
