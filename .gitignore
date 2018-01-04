@@ -1,2 +1,5 @@
 build
 build2
+Debug
+Release
+node_modules
