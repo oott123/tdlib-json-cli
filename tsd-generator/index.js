@@ -44,7 +44,7 @@ async function processToken(name, url) {
         switch (type) {
             case 'function':
             case 'object':
-                output = processFunctionOrObject(name, html)
+                output = processFunctionOrObject(name, html, type)
                 break;
         }
     } catch (e) {
@@ -54,7 +54,7 @@ async function processToken(name, url) {
     return output
 }
 
-function processFunctionOrObject(name, html) {
+function processFunctionOrObject(name, html, type) {
     const matches = html.match(/Public Attributes<\/h2>((?:.|\n)*)Static Public Attributes/)
     const args = []
     const result = {fields: args}
@@ -65,8 +65,6 @@ function processFunctionOrObject(name, html) {
             itemPart
             .replace(/&#160;/g, '')
             .replace(/\/a>\n(.*?)<\/td>.*>(.*)<\/a>/, function (_, type, name) {
-                type = type.replace(/<.*?>(.*?)<\/.*?>/g, '$1')
-                type = entities.decode(type)
                 type = parseType(type)
                 name = entities.decode(name).replace(/_$/, '')
                 let a = {type, name}
@@ -90,10 +88,26 @@ function processFunctionOrObject(name, html) {
         .replace(/Function/, 'TDFunction')
         result.extends = name
     })
+    html.replace(/Detailed Description<\/h2>\n<div class="textblock">((?:.|\n)*?)<h2/, function (_, text) {
+        text = text
+        .replace(/<p>(.*?)<\/p>/g, '$1\n')
+        .replace(/<.*?>|<\/.*?>/g, '')
+        .replace(/\n+/, '\n')
+        .trim()
+        result.desc = entities.decode(text)
+    })
+    if (type === 'function') {
+        // parse return type
+        html.replace(/ReturnType<\/a> = (.*?)<\/td>/, function (_, returnType) {
+            result.returnType = parseType(returnType)
+        })
+    }
     return result
 }
 
 function parseType(type) {
+    type = type.replace(/<.*?>(.*?)<\/.*?>/g, '$1')
+    type = entities.decode(type)
     return type
     .replace(/object_ptr< ([^>]+) >/g, '$1')
     .replace(/std::vector< ([^>]+) >/g, '$1[]')
