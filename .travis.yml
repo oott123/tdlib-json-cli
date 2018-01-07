@@ -16,9 +16,6 @@ language: cpp
 matrix:
   include:
     - os: linux
-      env: _CXX=g++-5 _CC=gcc-5 JOBS=1
-      addons: *gcc5
-    - os: linux
       env: _CXX=clang++-3.8 _CC=clang-3.8 JOBS=4
       addons: *clang38
     - os: osx
@@ -33,7 +30,6 @@ addons:
   apt:
     packages:
       - gperf
-
 
 install:
   # /usr/bin/gcc is 4.6 always, but gcc-X.Y is available.
@@ -53,3 +49,11 @@ script:
   - mkdir build
   - cd build
   - cmake -DCMAKE_BUILD_TYPE=Release .. && make -j${JOBS} VERBOSE=1
+
+deploy:
+  provider: releases
+  api_key: $GITHUB_TOKEN
+  file: "build/bin/tdlib_json_cli"
+  skip_cleanup: true
+  on:
+    tags: true
