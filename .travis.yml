@@ -16,15 +16,24 @@ language: cpp
 matrix:
   include:
     - os: linux
-      env: _CXX=clang++-3.8 _CC=clang-3.8 JOBS=4
+      env:
+        - _CXX=clang++-3.8
+        - _CC=clang-3.8
+        - JOBS=4
+        - CMAKE_ARGS="-DCMAKE_EXE_LINKER_FLAGS=-static -DCMAKE_FIND_LIBRARY_SUFFIXES=.a"
+        - BINARY_NAME=tdlib_json_cli_linux_static
+      addons: *clang38
+    - os: linux
+      env:
+        - _CXX=clang++-3.8
+        - _CC=clang-3.8
+        - JOBS=4
+        - CMAKE_ARGS=""
+        - BINARY_NAME=tdlib_json_cli_linux
       addons: *clang38
     - os: osx
-      env: JOBS=4
+      env: JOBS=4 CMAKE_ARGS="" BINARY_NAME=tdlib_json_cli_macos
       compiler: clang
-
-before_install:
-  #- sudo apt-get -qq update
-  #- sudo apt-get install -y libxml2-dev
 
 addons:
   apt:
@@ -48,15 +57,14 @@ install:
 script:
   - mkdir build
   - cd build
-  - cmake -DCMAKE_BUILD_TYPE=Release .. && make -j${JOBS} VERBOSE=1
-  - find .
-  - if [ "$TRAVIS_OS_NAME" = "osx" ]; then
-      mv ./build/bin/tdlib_json_cli ./build/bin/tdlib_json_cli_macos
-    fi
+  - cmake -DCMAKE_BUILD_TYPE=Release $CMAKE_ARGS .. && make -j${JOBS} VERBOSE=1
+  - mv ./bin/tdlib_json_cli ./bin/$BINARY_NAME
 
 deploy:
   provider: releases
   api_key: $GITHUB_TOKEN
   file_glob: true
-  file: build/bin/*
+  file: bin/*
   skip_cleanup: true
+  on:
+    tags: true
