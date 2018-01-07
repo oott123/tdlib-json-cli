@@ -11,10 +11,6 @@ addons_shortcuts:
       sources:  [ 'ubuntu-toolchain-r-test']
       packages: [ 'gcc-5','g++-5', 'gperf']
 
-branches:
-  only:
-  - travis
-
 language: cpp
 
 matrix:
