@@ -50,10 +50,15 @@ script:
   - cd build
   - cmake -DCMAKE_BUILD_TYPE=Release .. && make -j${JOBS} VERBOSE=1
 
+pre_deploy:
+  - find .
+  - if [ "$TRAVIS_OS_NAME" = "osx" ]; then
+      mv ./build/bin/tdlib_json_cli ./build/bin/tdlib_json_cli_macos
+    fi
+
 deploy:
   provider: releases
   api_key: $GITHUB_TOKEN
-  file: "build/bin/tdlib_json_cli"
+  file_glob: true
+  file: build/bin/*
   skip_cleanup: true
-  on:
-    tags: true
