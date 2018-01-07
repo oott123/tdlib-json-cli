@@ -49,8 +49,6 @@ script:
   - mkdir build
   - cd build
   - cmake -DCMAKE_BUILD_TYPE=Release .. && make -j${JOBS} VERBOSE=1
-
-pre_deploy:
   - find .
   - if [ "$TRAVIS_OS_NAME" = "osx" ]; then
       mv ./build/bin/tdlib_json_cli ./build/bin/tdlib_json_cli_macos
