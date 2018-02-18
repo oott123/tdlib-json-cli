@@ -64,6 +64,9 @@ See [td/README.md](td/README.md)
 
 You should have php, doxygen, node.js and npm installed.
 
+Before generate types file, you **MUST** build successfully at least one time.
+This because of some code of tdlib which used to generate docs and are generated at the build time.
+
 ```bash
 cd td
 doxygen
