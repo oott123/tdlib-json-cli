@@ -1,4 +1,14 @@
-# tdlib-json-cli
+# TDLib JSON CLI
+
+![TDLib v1.1.1](https://img.shields.io/badge/TDLib-v1.1.1-green.svg) ![TDLib JSON CLI v1.1.1](https://img.shields.io/badge/TDLib%20JSON%20CLI-v1.1.1-green.svg) ![Build Status](https://img.shields.io/travis/oott123/tdlib-json-cli.svg) ![AGPL v3.0](https://img.shields.io/github/license/oott123/tdlib-json-cli.svg) [![Twitter](https://img.shields.io/twitter/url/https/github.com/oott123/tdlib-json-cli/.svg?style=social)](https://twitter.com/intent/tweet?text=Wow:&url=https%3A%2F%2Fgithub.com%2Foott123%2Ftdlib-json-cli%2F)
+
+## About
+
+TDLib JSON CLI is a simple command line tool uses stdin & stdout as input & output of tdlib's [td_json_client][td-json].
+
+You can use this to replace the buggy, weird [tg-cli](https://github.com/vysheng/tg) and it's json interface.
+
+This project is licensed under AGPL v3.0, but you can distribute it separately so you are not required to make your project open source under AGPL compatible license.
 
 ## Usage
 
@@ -12,7 +22,7 @@ Request will be send to tdlib line by line, so make sure you have your json stri
 
 Response will be recieve from tdlib to stdout line by line.
 
-See [TDLib Documention](https://core.telegram.org/tdlib/docs/td__json__client_8h.html) for more information.
+See [TDLib Documention][td-json] for more information.
 
 ### Commands
 
@@ -77,3 +87,5 @@ node ./types-generator/index.js
 ```
 
 This will write `types.json` to the project root directory which contains types of all the objects and functions.
+
+[td-json]: https://core.telegram.org/tdlib/docs/td__json__client_8h.html
