@@ -20,14 +20,6 @@ matrix:
         - _CXX=clang++-3.8
         - _CC=clang-3.8
         - JOBS=4
-        - CMAKE_ARGS="-DCMAKE_EXE_LINKER_FLAGS=-static -DCMAKE_FIND_LIBRARY_SUFFIXES=.a"
-        - BINARY_NAME=tdlib_json_cli_linux_static
-      addons: *clang38
-    - os: linux
-      env:
-        - _CXX=clang++-3.8
-        - _CC=clang-3.8
-        - JOBS=4
         - CMAKE_ARGS=""
         - BINARY_NAME=tdlib_json_cli_linux
       addons: *clang38
