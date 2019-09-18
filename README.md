@@ -1,7 +1,7 @@
 # TDLib JSON CLI
 
 ![TDLib v1.5.0](https://img.shields.io/badge/TDLib-v1.5.0-green.svg)
-![TDLib JSON CLI v1.1.2](https://img.shields.io/badge/TDLib%20JSON%20CLI-v1.1.2-green.svg)
+![TDLib JSON CLI v1.1.3](https://img.shields.io/badge/TDLib%20JSON%20CLI-v1.1.3-green.svg)
 ![Build Status](https://img.shields.io/travis/oott123/tdlib-json-cli.svg)
 ![AGPL v3.0](https://img.shields.io/github/license/oott123/tdlib-json-cli.svg)
 [![GitHub release](https://img.shields.io/github/release/oott123/tdlib-json-cli.svg)](https://github.com/oott123/tdlib-json-cli/releases)
