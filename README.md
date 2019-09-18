@@ -18,8 +18,17 @@ This project is licensed under AGPL v3.0, but you can distribute it separately s
 ## Usage
 
 ```bash
-./bin/tdlib-json-cli
+./bin/tdlib-json-cli [verbosity]
 ```
+[verbosity] = 0123456789
+Set TDLib's verbosity level at startup.
+- 0 - fatal errors;
+- 1 - errors; 
+- 2 - warnings and debug warnings;
+- 3 - informational;
+- 4 - debug;
+- 5 - verbose debug;
+- greater than 5 and up to 1024 can be used to enable even more logging.
 
 tdlib-json-cli will use stdin & stdout to process data.
 
