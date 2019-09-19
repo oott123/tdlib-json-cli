@@ -1,7 +1,7 @@
 # TDLib JSON CLI
 
 ![TDLib v1.5.0](https://img.shields.io/badge/TDLib-v1.5.0-green.svg)
-![TDLib JSON CLI v1.1.2](https://img.shields.io/badge/TDLib%20JSON%20CLI-v1.1.2-green.svg)
+![TDLib JSON CLI v1.1.3](https://img.shields.io/badge/TDLib%20JSON%20CLI-v1.1.3-green.svg)
 ![Build Status](https://img.shields.io/travis/oott123/tdlib-json-cli.svg)
 ![AGPL v3.0](https://img.shields.io/github/license/oott123/tdlib-json-cli.svg)
 [![GitHub release](https://img.shields.io/github/release/oott123/tdlib-json-cli.svg)](https://github.com/oott123/tdlib-json-cli/releases)
@@ -18,8 +18,17 @@ This project is licensed under AGPL v3.0, but you can distribute it separately s
 ## Usage
 
 ```bash
-./bin/tdlib-json-cli
+./bin/tdlib-json-cli [verbosity]
 ```
+[verbosity] = 0123456789
+Set TDLib's verbosity level at startup.
+- 0 - fatal errors;
+- 1 - errors; 
+- 2 - warnings and debug warnings;
+- 3 - informational;
+- 4 - debug;
+- 5 - verbose debug;
+- greater than 5 and up to 1024 can be used to enable even more logging.
 
 tdlib-json-cli will use stdin & stdout to process data.
 
