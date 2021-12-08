@@ -35,7 +35,8 @@ jobs:
           mkdir -p ../out
           mv ./bin/tdlib_json_cli ../out/tdlib_json_cli-linux-$MATRIX_COMPILER
           cd ../td
-          doxygen
+          echo "start doxygen ..."
+          time doxygen
           cd ..
           cd types-generator
           npm i
