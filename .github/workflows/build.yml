@@ -25,13 +25,15 @@ jobs:
           cd ../td
           doxygen
           cd ..
-          cd types-generator && npm i
+          cd types-generator
+          npm i
+          cd ..
           node ./types-generator/index.js
           mv types.json out/types.json
       - name: Upload binary artifact
         uses: actions/upload-artifact@v2
         with:
-          name: binaries
+          name: out
           path: out
   release:
     name: Release
@@ -42,7 +44,7 @@ jobs:
       - name: Download artifacts
         uses: actions/download-artifact@v1
         with:
-          name: binaries
+          name: out
       - name: Release
         uses: fnkr/github-action-ghr@v1
         env:
