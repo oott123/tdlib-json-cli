@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-18.04
     strategy:
       matrix:
-        compiler: [clang, musl]
+        compiler: [clang, musl, gcc]
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -29,25 +29,21 @@ jobs:
       - name: Build TDLib
         run: |
           if [ "$MATRIX_COMPILER" == "clang" ]; then
-            export _CXX=clang++-3.8
-            export _CC=clang-3.8
+            export CXX=clang++-3.9
+            export CC=clang-3.9
           fi
           if [ "$MATRIX_COMPILER" == "musl" ]; then
-            export _CXX=musl-g++
-            export _CC=musl-gcc
+            export CXX=musl-g++
+            export CC=musl-gcc
           fi
-          echo "CXX: $_CXX, CC: $_CC"
+          echo "CXX: $CXX, CC: $CC"
           mkdir build
           cd build
           cmake -DCMAKE_BUILD_TYPE=Release ..
-          cmake --build . -- -j2
+          cmake --build . --target tdlib_json_cli -- -j2
           mkdir -p ../out
-          mv ./bin/tdlib_json_cli ../out/tdlib_json_cli_linux
-        env:
-          MATRIX_COMPILER: ${{ matrix.compiler }}
-      - name: Generate types
-        run: |
-          cd td
+          mv ./bin/tdlib_json_cli ../out/tdlib_json_cli-linux-$MATRIX_COMPILER
+          cd ../td
           doxygen
           cd ..
           cd types-generator
@@ -55,21 +51,26 @@ jobs:
           cd ..
           node ./types-generator/index.js
           mv types.json out/types.json
+        env:
+          MATRIX_COMPILER: ${{ matrix.compiler }}
       - name: Upload binary artifact
         uses: actions/upload-artifact@v2
         with:
-          name: out
+          name: out-${{ matrix.compiler }}
           path: out
   release:
     name: Release
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        compiler: [clang, musl, gcc]
     needs: [build]
     if: startsWith(github.ref, 'refs/tags/')
     steps:
       - name: Download artifacts
         uses: actions/download-artifact@v1
         with:
-          name: out
+          name: out-${{ matrix.compiler }}
       - name: Release
         uses: fnkr/github-action-ghr@v1
         env:
