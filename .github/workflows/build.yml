@@ -1,4 +1,4 @@
-name: TDLib Linux
+name: Build
 
 on: [push]
 
