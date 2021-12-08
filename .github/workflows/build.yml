@@ -4,10 +4,10 @@ on: [push]
 
 jobs:
   build:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     strategy:
       matrix:
-        compiler: [clang, gcc]
+        compiler: [clang, gcc, types]
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -20,13 +20,15 @@ jobs:
         uses: egor-tensin/setup-clang@v1
         if: matrix.compiler == 'clang'
         with:
-          version: 3.9
+          version: 10
           platform: x64
       - name: Build TDLib
+        if: matrix.compiler != 'clang'
         run: |
           if [ "$MATRIX_COMPILER" == "clang" ]; then
-            export CXX=clang++-3.9
-            export CC=clang-3.9
+            export CXX=clang++-10
+            export CC=clang-10
+            export CXXFLAGS="-stdlib=libc++"
           fi
           mkdir build
           cd build
@@ -34,20 +36,26 @@ jobs:
           cmake --build . --target tdlib_json_cli -- -j2
           mkdir -p ../out
           mv ./bin/tdlib_json_cli ../out/tdlib_json_cli-linux-$MATRIX_COMPILER
-          cd ../td
-          if [ "$MATRIX_COMPILER" == "clang" ]; then
-            echo "start doxygen ..."
-            time doxygen
-            cd ..
-            cd types-generator
-            npm i
-            cd ..
-            node ./types-generator/index.js
-            mv types.json out/types.json
-          fi
         env:
           MATRIX_COMPILER: ${{ matrix.compiler }}
-      - name: Upload binary artifact
+      - name: Build Types
+        if: matrix.compiler == 'types'
+        run: |
+          cd td
+          mkdir build
+          cd build
+          cmake -DCMAKE_BUILD_TYPE=Release ..
+          cmake --build . --target prepare_cross_compiling -- -j2
+          echo "start doxygen ..."
+          time doxygen
+          cd ..
+          cd types-generator
+          npm i
+          cd ..
+          node ./types-generator/index.js
+          mkdir -p out
+          mv types.json out/types.json
+      - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
           name: out-${{ matrix.compiler }}
