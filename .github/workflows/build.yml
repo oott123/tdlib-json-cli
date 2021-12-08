@@ -20,15 +20,14 @@ jobs:
         uses: egor-tensin/setup-clang@v1
         if: matrix.compiler == 'clang'
         with:
-          version: 10
+          version: 3.9
           platform: x64
       - name: Build TDLib
         if: matrix.compiler != 'types'
         run: |
           if [ "$MATRIX_COMPILER" == "clang" ]; then
-            export CXX=clang++-10
-            export CC=clang-10
-            export CXXFLAGS="-stdlib=libc++"
+            export CXX=clang++-3.9
+            export CC=clang-3.9
           fi
           mkdir build
           cd build
