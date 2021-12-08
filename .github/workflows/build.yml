@@ -4,16 +4,20 @@ on: [push]
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-18.04
     steps:
       - name: Checkout
         uses: actions/checkout@v2
         with:
           submodules: recursive
       - name: Install dependency
-        # build-essential and cmake are already installed on github shared runners
         run: |
           sudo apt-get install -y gperf libssl-dev zlib1g-dev file libc-bin doxygen
+      - name: Set up Clang
+        uses: egor-tensin/setup-clang@v1
+        with:
+          version: 3.9
+          platform: x64
       - name: Build TDLib
         run: |
           mkdir build
