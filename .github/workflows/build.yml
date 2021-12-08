@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
-      uses: actions/checkout@v2.0.0
+      uses: actions/checkout@v2
       with:
         submodules: recursive
     - name: Install dependency
