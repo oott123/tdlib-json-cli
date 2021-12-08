@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-18.04
     strategy:
       matrix:
-        compiler: [clang, musl, gcc]
+        compiler: [clang, gcc]
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -22,21 +22,12 @@ jobs:
         with:
           version: 3.9
           platform: x64
-      - name: Set up musl
-        if: matrix.compiler == 'musl'
-        run: |
-          sudo apt-get install -y musl-tools
       - name: Build TDLib
         run: |
           if [ "$MATRIX_COMPILER" == "clang" ]; then
             export CXX=clang++-3.9
             export CC=clang-3.9
           fi
-          if [ "$MATRIX_COMPILER" == "musl" ]; then
-            export CXX=musl-g++
-            export CC=musl-gcc
-          fi
-          echo "CXX: $CXX, CC: $CC"
           mkdir build
           cd build
           cmake -DCMAKE_BUILD_TYPE=Release ..
