@@ -11,6 +11,7 @@ jobs:
       with:
         submodules: recursive
     - name: Install dependency
+      # build-essential and cmake are already installed on github shared runners
       run: |
         sudo apt-get install -y gperf libssl-dev zlib1g-dev file libc-bin doxygen
     - name: Build TDLib
@@ -24,12 +25,12 @@ jobs:
         cd ../td
         doxygen
     - name: Upload binary artifact
-      uses: actions/upload-artifact@v1.0.0
+      uses: actions/upload-artifact@v2
       with:
         name: binaries
         path: bin
     - name: Upload docs html artifact
-      uses: actions/upload-artifact@v1.0.0
+      uses: actions/upload-artifact@v2
       with:
         name: html
         path: td/docs/html
@@ -42,9 +43,6 @@ jobs:
         uses: actions/download-artifact@v1
         with:
           name: html
-      - name: Install dependency
-        run: |
-          sudo apt-get install -y doxygen 
       - name: Generate types.json
         run: |
           cd types-generator && npm i
