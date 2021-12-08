@@ -20,23 +20,19 @@ jobs:
           cd build
           cmake -DCMAKE_BUILD_TYPE=Release ..
           cmake --build . -- -j2
-          mkdir -p ../bin
-          mv ./bin/tdlib_json_cli ../bin/tdlib_json_cli_linux
+          mkdir -p ../out
+          mv ./bin/tdlib_json_cli ../out/tdlib_json_cli_linux
           cd ../td
           doxygen
           cd ..
           cd types-generator && npm i
           node ./types-generator/index.js
+          mv types.json out/types.json
       - name: Upload binary artifact
         uses: actions/upload-artifact@v2
         with:
           name: binaries
-          path: bin
-      - name: Upload types artifact
-        uses: actions/upload-artifact@v1.0.0
-        with:
-          name: types
-          path: types.json
+          path: out
   release:
     name: Release
     runs-on: ubuntu-latest
@@ -50,5 +46,5 @@ jobs:
       - name: Release
         uses: fnkr/github-action-ghr@v1
         env:
-          GHR_PATH: binaries/
+          GHR_PATH: out/
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
