@@ -2,7 +2,7 @@
 
 ![TDLib v1.7.10](https://img.shields.io/badge/TDLib-v1.7.0-green.svg)
 ![TDLib JSON CLI v1.7.10-rc1](https://img.shields.io/badge/TDLib%20JSON%20CLI-v1.7.0-green.svg)
-![Build Status](https://img.shields.io/travis/oott123/tdlib-json-cli.svg)
+[![TDLib Linux](https://github.com/oott123/tdlib-json-cli/actions/workflows/build.yml/badge.svg)](https://github.com/oott123/tdlib-json-cli/actions/workflows/build.yml)
 ![AGPL v3.0](https://img.shields.io/github/license/oott123/tdlib-json-cli.svg)
 [![GitHub release](https://img.shields.io/github/release/oott123/tdlib-json-cli.svg)](https://github.com/oott123/tdlib-json-cli/releases)
 [![Twitter](https://img.shields.io/badge/Tweet!-Thanks!-green.svg?style=social)](https://twitter.com/intent/tweet?text=Wow:&url=https%3A%2F%2Fgithub.com%2Foott123%2Ftdlib-json-cli%2F)
