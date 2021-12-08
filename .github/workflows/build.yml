@@ -35,14 +35,16 @@ jobs:
           mkdir -p ../out
           mv ./bin/tdlib_json_cli ../out/tdlib_json_cli-linux-$MATRIX_COMPILER
           cd ../td
-          echo "start doxygen ..."
-          time doxygen
-          cd ..
-          cd types-generator
-          npm i
-          cd ..
-          node ./types-generator/index.js
-          mv types.json out/types.json
+          if [ "$MATRIX_COMPILER" == "clang" ]; then
+            echo "start doxygen ..."
+            time doxygen
+            cd ..
+            cd types-generator
+            npm i
+            cd ..
+            node ./types-generator/index.js
+            mv types.json out/types.json
+          fi
         env:
           MATRIX_COMPILER: ${{ matrix.compiler }}
       - name: Upload binary artifact
