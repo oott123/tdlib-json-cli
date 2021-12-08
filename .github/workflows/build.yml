@@ -41,18 +41,18 @@ jobs:
         uses: actions/download-artifact@v1
         with:
           name: html
-    - name: Install dependency
-      run: |
-        sudo apt-get install -y doxygen 
-    - name: Generate types.json
-      run: |
-        cd types-generator && npm i
-        node ./types-generator/index.js
-    - name: Upload types artifact
-      uses: actions/upload-artifact@v1.0.0
-      with:
-        name: types
-        path: types.json
+      - name: Install dependency
+        run: |
+          sudo apt-get install -y doxygen 
+      - name: Generate types.json
+        run: |
+          cd types-generator && npm i
+          node ./types-generator/index.js
+      - name: Upload types artifact
+        uses: actions/upload-artifact@v1.0.0
+        with:
+          name: types
+          path: types.json
   release:
     name: Release
     runs-on: ubuntu-latest
