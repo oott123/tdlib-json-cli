@@ -6,47 +6,32 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout
-      uses: actions/checkout@v2
-      with:
-        submodules: recursive
-    - name: Install dependency
-      # build-essential and cmake are already installed on github shared runners
-      run: |
-        sudo apt-get install -y gperf libssl-dev zlib1g-dev file libc-bin doxygen
-    - name: Build TDLib
-      run: |
-        mkdir build
-        cd build
-        cmake -DCMAKE_BUILD_TYPE=Release ..
-        cmake --build . -- -j2
-        mkdir -p ../bin
-        mv ./bin/tdlib_json_cli ../bin/tdlib_json_cli_linux
-        cd ../td
-        doxygen
-    - name: Upload binary artifact
-      uses: actions/upload-artifact@v2
-      with:
-        name: binaries
-        path: bin
-    - name: Upload docs html artifact
-      uses: actions/upload-artifact@v2
-      with:
-        name: html
-        path: td/docs/html
-  types:
-    name: Generate types.json
-    runs-on: ubuntu-latest
-    needs: [build]
-    steps:
-      - name: Download docs html artifacts
-        uses: actions/download-artifact@v1
+      - name: Checkout
+        uses: actions/checkout@v2
         with:
-          name: html
-      - name: Generate types.json
+          submodules: recursive
+      - name: Install dependency
+        # build-essential and cmake are already installed on github shared runners
         run: |
+          sudo apt-get install -y gperf libssl-dev zlib1g-dev file libc-bin doxygen
+      - name: Build TDLib
+        run: |
+          mkdir build
+          cd build
+          cmake -DCMAKE_BUILD_TYPE=Release ..
+          cmake --build . -- -j2
+          mkdir -p ../bin
+          mv ./bin/tdlib_json_cli ../bin/tdlib_json_cli_linux
+          cd ../td
+          doxygen
+          cd ..
           cd types-generator && npm i
           node ./types-generator/index.js
+      - name: Upload binary artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: binaries
+          path: bin
       - name: Upload types artifact
         uses: actions/upload-artifact@v1.0.0
         with:
