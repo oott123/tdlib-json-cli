@@ -75,6 +75,10 @@ jobs:
         uses: actions/download-artifact@v1
         with:
           name: out-gcc
+      - name: Download artifacts
+        uses: actions/download-artifact@v1
+        with:
+          name: out-types
       - name: Move binaries
         run: |
           mkdir -p out
