@@ -65,9 +65,9 @@ jobs:
         with:
           name: out-gcc
       - name: Move binaries
-        run:
-          - mkdir -p out
-          - mv out-*/* out/
+        run: |
+          mkdir -p out
+          mv out-*/* out/
       - name: Release
         uses: fnkr/github-action-ghr@v1
         env:
