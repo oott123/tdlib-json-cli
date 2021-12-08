@@ -2,6 +2,11 @@ name: Nightly updates for TDLib
 
 on:
   workflow_dispatch:
+    inputs:
+      name:
+        default: TDLib
+        description: Name of the project
+        required: false
   schedule:
     - cron: "33 3 * * *"
 
