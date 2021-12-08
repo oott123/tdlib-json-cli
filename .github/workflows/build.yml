@@ -12,7 +12,7 @@ jobs:
         submodules: recursive
     - name: Install dependency
       run: |
-        sudo apt-get install gperf cmake build-essential libssl-dev zlib1g-dev file libc-bin
+        sudo apt-get install -y gperf libssl-dev zlib1g-dev file libc-bin
     - name: Build TDLib
       run: |
         mkdir build
