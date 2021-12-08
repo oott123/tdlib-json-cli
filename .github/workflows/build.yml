@@ -1,0 +1,25 @@
+name: TDLib Linux
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2.0.0
+    - name: Install dependency
+      run: |
+        sudo apt-get install gperf cmake build-essential libssl-dev zlib1g-dev file libc-bin
+    - name: Build TDLib
+      run: |
+        mkdir build
+        cd build
+        cmake -DCMAKE_BUILD_TYPE=Release ..
+        cmake --build .
+        mv ./bin/tdlib_json_cli ./bin/tdlib_json_cli_linux
+    - name: Upload artifact
+      uses: actions/upload-artifact@v1.0.0
+      with:
+        name: tdlib_json_cli_linux
+        path: build/bin
