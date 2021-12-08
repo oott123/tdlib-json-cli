@@ -18,12 +18,12 @@ jobs:
           sudo apt-get install -y gperf libssl-dev zlib1g-dev doxygen
       - name: Set up Clang
         uses: egor-tensin/setup-clang@v1
-        if: matrix.compiler == "clang"
+        if: matrix.compiler == 'clang'
         with:
           version: 3.9
           platform: x64
       - name: Set up musl
-        if: matrix.compiler == "musl"
+        if: matrix.compiler == 'musl'
         run: |
           sudo apt-get install -y musl-tools
       - name: Build TDLib
