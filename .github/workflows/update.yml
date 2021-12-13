@@ -24,4 +24,4 @@ jobs:
           cd ..
           git config --local user.name "oott123"
           git config --local user.email "oott123@users.noreply.github.com"
-          (git commit -m "chore: Bump TDLib version" && git push -u origin nightly) || true
+          (git commit -am "chore: Bump TDLib version" && git push -u origin nightly) || true
