@@ -24,4 +24,9 @@ jobs:
           cd ..
           git config --local user.name "oott123"
           git config --local user.email "oott123@users.noreply.github.com"
+          git remote set-url origin "git@github.com:oott123/tdlib-json-cli.git"
+          eval `ssh-agent`
+          echo "$DEPLOY_SSH_KEY" | ssh-add -
           (git commit -am "chore: Bump TDLib version" && git push -u origin nightly) || true
+        env:
+          DEPLOY_SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
