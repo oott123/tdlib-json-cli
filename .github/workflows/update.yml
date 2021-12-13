@@ -16,9 +16,9 @@ jobs:
           submodules: recursive
       - name: Check for updates
         run: |
-          cd td && git pull --ff-only
+          cd td
+          git pull --ff-only
+          cd ..
           git config --local user.name "oott123"
           git config --local user.email "oott123@users.noreply.github.com"
-          git commit -m "chore: Bump TDLib version"
-          git push -u origin nightly
-        continue-on-error: true
+          (git commit -m "chore: Bump TDLib version" && git push -u origin nightly) || true
