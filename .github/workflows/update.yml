@@ -17,7 +17,10 @@ jobs:
       - name: Check for updates
         run: |
           cd td
-          git pull --ff-only
+          git status
+          git fetch
+          git reset --hard origin/master
+          git status
           cd ..
           git config --local user.name "oott123"
           git config --local user.email "oott123@users.noreply.github.com"
