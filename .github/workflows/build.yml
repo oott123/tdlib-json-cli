@@ -25,20 +25,18 @@ jobs:
       - name: Build TDLib
         if: matrix.compiler != 'types'
         run: |
-          if [ "$MATRIX_COMPILER" == "clang" ]; then
-            export CXX=clang++-14
-            export CC=clang-14
-            export CXXFLAGS="-stdlib=libc++"
-          fi
           mkdir build
           cd build
           if [ "$MATRIX_COMPILER" == "clang" ]; then
-            cmake -DCMAKE_BUILD_TYPE=Release  ..
-          else
+            CXX=clang++-14 \
+            CC=clang-14 \
+            CXXFLAGS="-stdlib=libc++"\
             cmake -DCMAKE_BUILD_TYPE=Release -DTD_ENABLE_LTO=ON \
               -DCMAKE_AR=/usr/bin/llvm-ar-14 -DCMAKE_NM=/usr/bin/llvm-nm-14 \
               -DCMAKE_OBJDUMP=/usr/bin/llvm-objdump-14 -DCMAKE_RANLIB=/usr/bin/llvm-ranlib-14 \
               ..
+          else
+            cmake -DCMAKE_BUILD_TYPE=Release -DTD_ENABLE_LTO=ON  ..
           fi
           cmake --build . --target tdlib_json_cli -- -j2
           mkdir -p ../out
