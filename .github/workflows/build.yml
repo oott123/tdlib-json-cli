@@ -28,19 +28,22 @@ jobs:
         run: |
           mkdir build
           cd build
+          mkdir -p ../out
           if [ "$MATRIX_COMPILER" == "clang" ]; then
             export CXX=clang++-14
             export CC=clang-14
             export CXXFLAGS="-stdlib=libc++"
+            which llvm-ar-14
+            which llvm-nm-14
             cmake -DCMAKE_BUILD_TYPE=Release -DTD_ENABLE_LTO=ON \
               -DCMAKE_AR=llvm-ar-14 -DCMAKE_NM=llvm-nm-14 \
               -DCMAKE_OBJDUMP=llvm-objdump-14 -DCMAKE_RANLIB=llvm-ranlib-14 \
               ..
+            cmake -DCMAKE_AR=llvm-ar-14 -DCMAKE_NM=llvm-nm-14 --build . --target tdlib_json_cli -- -j2
           else
             cmake -DCMAKE_BUILD_TYPE=Release -DTD_ENABLE_LTO=ON  ..
+            cmake --build . --target tdlib_json_cli -- -j2
           fi
-          cmake --build . --target tdlib_json_cli -- -j2
-          mkdir -p ../out
           mv ./bin/tdlib_json_cli ../out/tdlib_json_cli-linux-$MATRIX_COMPILER
         env:
           MATRIX_COMPILER: ${{ matrix.compiler }}
