@@ -6,6 +6,7 @@ jobs:
   build:
     runs-on: ubuntu-22.04
     strategy:
+      fail-fast: false
       matrix:
         compiler: [clang, gcc, types]
     steps:
@@ -28,12 +29,12 @@ jobs:
           mkdir build
           cd build
           if [ "$MATRIX_COMPILER" == "clang" ]; then
-            CXX=clang++-14 \
-            CC=clang-14 \
-            CXXFLAGS="-stdlib=libc++"\
+            export CXX=clang++-14
+            export CC=clang-14
+            export CXXFLAGS="-stdlib=libc++"
             cmake -DCMAKE_BUILD_TYPE=Release -DTD_ENABLE_LTO=ON \
-              -DCMAKE_AR=/usr/bin/llvm-ar-14 -DCMAKE_NM=/usr/bin/llvm-nm-14 \
-              -DCMAKE_OBJDUMP=/usr/bin/llvm-objdump-14 -DCMAKE_RANLIB=/usr/bin/llvm-ranlib-14 \
+              -DCMAKE_AR=llvm-ar-14 -DCMAKE_NM=llvm-nm-14 \
+              -DCMAKE_OBJDUMP=llvm-objdump-14 -DCMAKE_RANLIB=llvm-ranlib-14 \
               ..
           else
             cmake -DCMAKE_BUILD_TYPE=Release -DTD_ENABLE_LTO=ON  ..
