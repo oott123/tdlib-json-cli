@@ -4,7 +4,7 @@ on: [push, workflow_dispatch]
 
 jobs:
   build:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-22.04
     strategy:
       matrix:
         compiler: [clang, gcc, types]
@@ -15,23 +15,31 @@ jobs:
           submodules: recursive
       - name: Install dependency
         run: |
-          sudo apt-get install -y gperf libssl-dev zlib1g-dev doxygen
+          sudo apt-get install -y gperf libssl-dev zlib1g-dev doxygen libc++-dev libc++abi-dev
       - name: Set up Clang
         uses: egor-tensin/setup-clang@v1
         if: matrix.compiler == 'clang'
         with:
-          version: 3.9
+          version: 14
           platform: x64
       - name: Build TDLib
         if: matrix.compiler != 'types'
         run: |
           if [ "$MATRIX_COMPILER" == "clang" ]; then
-            export CXX=clang++-3.9
-            export CC=clang-3.9
+            export CXX=clang++-14
+            export CC=clang-14
+            export CXXFLAGS="-stdlib=libc++"
           fi
           mkdir build
           cd build
-          cmake -DCMAKE_BUILD_TYPE=Release ..
+          if [ "$MATRIX_COMPILER" == "clang" ]; then
+            cmake -DCMAKE_BUILD_TYPE=Release  ..
+          else
+            cmake -DCMAKE_BUILD_TYPE=Release -DTD_ENABLE_LTO=ON \
+              -DCMAKE_AR=/usr/bin/llvm-ar-14 -DCMAKE_NM=/usr/bin/llvm-nm-14 \
+              -DCMAKE_OBJDUMP=/usr/bin/llvm-objdump-14 -DCMAKE_RANLIB=/usr/bin/llvm-ranlib-14 \
+              ..
+          fi
           cmake --build . --target tdlib_json_cli -- -j2
           mkdir -p ../out
           mv ./bin/tdlib_json_cli ../out/tdlib_json_cli-linux-$MATRIX_COMPILER
