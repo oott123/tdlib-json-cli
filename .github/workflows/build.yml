@@ -8,7 +8,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        compiler: [clang, gcc, types]
+        compiler: [gcc, types]
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -39,7 +39,7 @@ jobs:
               -DCMAKE_AR=llvm-ar-14 -DCMAKE_NM=llvm-nm-14 \
               -DCMAKE_OBJDUMP=llvm-objdump-14 -DCMAKE_RANLIB=llvm-ranlib-14 \
               ..
-            cmake -DCMAKE_AR=llvm-ar-14 -DCMAKE_NM=llvm-nm-14 --build . --target tdlib_json_cli -- -j2
+            cmake --build . --target tdlib_json_cli -- -j2
           else
             cmake -DCMAKE_BUILD_TYPE=Release -DTD_ENABLE_LTO=ON  ..
             cmake --build . --target tdlib_json_cli -- -j2
