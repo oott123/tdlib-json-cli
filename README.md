@@ -77,11 +77,11 @@ make -j4
 
 ### Linux
 
-See [td/README.md](td/README.md)
+See [td/README.md](https://github.com/tdlib/td/blob/master/README.md)
 
 ### Windows
 
-See [td/README.md](td/README.md)
+See [td/README.md](https://github.com/tdlib/td/blob/master/README.md)
 
 ## Generate Types File
 
