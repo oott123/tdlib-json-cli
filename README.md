@@ -22,7 +22,7 @@ This project is licensed under AGPL v3.0, but you can distribute it separately s
 [verbosity] = 0123456789
 Set TDLib's verbosity level at startup.
 - 0 - fatal errors;
-- 1 - errors; 
+- 1 - errors;
 - 2 - warnings and debug warnings;
 - 3 - informational;
 - 4 - debug;
@@ -85,7 +85,7 @@ See [td/README.md](https://github.com/tdlib/td/blob/master/README.md)
 
 ## Generate Types File
 
-You should have php, doxygen, node.js and npm installed.
+You should have php, doxygen and ruby installed.
 
 Before generate types file, you **MUST** build successfully at least one time.
 This because of some code of tdlib which used to generate docs and are generated at the build time.
@@ -94,9 +94,8 @@ This because of some code of tdlib which used to generate docs and are generated
 cd td
 doxygen
 cd ../types-generator
-npm i
-cd ..
-node ./types-generator/index.js
+bundle install
+bundle exec rake
 ```
 
 This will write `types.json` to the project root directory which contains types of all the objects and functions.
