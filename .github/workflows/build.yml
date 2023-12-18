@@ -60,9 +60,8 @@ jobs:
           time doxygen
           cd ..
           cd types-generator
-          npm i
-          cd ..
-          node ./types-generator/index.js
+          bundle install
+          bundle exec rake
           mkdir -p out
           mv types.json out/types.json
       - name: Upload artifact
