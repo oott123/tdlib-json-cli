@@ -61,6 +61,7 @@ jobs:
           cd ..
           cd types-generator
           sudo gem install bundler
+          bundle config set --local path vendor/bundle
           bundle install
           bundle exec rake
           mkdir -p out
