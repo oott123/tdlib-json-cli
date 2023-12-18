@@ -60,6 +60,7 @@ jobs:
           time doxygen
           cd ..
           cd types-generator
+          gem install bundler
           bundle install
           bundle exec rake
           mkdir -p out
