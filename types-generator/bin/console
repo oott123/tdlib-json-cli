@@ -1,0 +1,10 @@
+#!/usr/bin/env ruby
+
+require 'irb'
+require_relative File.join(File.dirname(File.expand_path(__dir__)), 'config/application')
+
+def reload!
+  puts Application.load_libs
+end
+
+IRB.start

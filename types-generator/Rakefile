@@ -1,0 +1,10 @@
+desc "Generate types"
+task default: %w[run]
+
+task :environment do
+  require_relative 'config/application'
+end
+
+task run: :environment do
+  TypesGenerator.run
+end
