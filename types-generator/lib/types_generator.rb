@@ -104,4 +104,3 @@ class TypesGenerator
     end
   end
 end
-end
