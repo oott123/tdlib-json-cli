@@ -57,8 +57,8 @@ class TypesGenerator
       extends = extends(object[:type])
       returnType = page.xpath("//table[@class='memberdecls']/tr[starts-with(@class, 'memitem')]/td[@class='memItemRight']/b[text()='ReturnType']")
                        .first&.parent&.xpath("a[@class='el']")&.last&.text if object[:type] == "function"
-      object.merge(returnType:) if returnType
-      object.merge(fields:, extends:)
+      object.merge!(returnType: returnType) if returnType
+      object.merge!(fields: fields, extends: extends)
     end
 
     def fields(fields_table)
